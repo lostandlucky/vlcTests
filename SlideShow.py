@@ -30,6 +30,7 @@ class SlideShow:
         # Bind the right arrow key to go to the next video
         self.root.bind("<Right>", self.increment_media_index)
         self.root.bind("<Left>", self.decrement_media_index)
+        self.root.bind("<Escape>", self.quit)
         
         print(self.media_files)
         #Start the show
@@ -55,10 +56,14 @@ class SlideShow:
         self.player.play()
 
     def load_media_locations(self, media_folder):
-        media_files = [os.path.join(media_folder, f) for f in os.listdir(media_folder) if f.endswith(('.mp4', '.mkv', '.mov'))]
+        media_files = [os.path.join(media_folder, f) for f in os.listdir(media_folder) if f.endswith(('.mp4', '.mkv', '.mov', '.avi', '.png', '.jpg', '.jpeg', '.gif'))]
         if not media_files:
             raise FileNotFoundError(f"No media files found in the folder: {media_folder}")
         return media_files
+    
+    def quit(self, optional_event=None):
+        self.player.stop()
+        self.root.quit()
             
 
 
@@ -67,8 +72,9 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.title("VLC Video Player")
 
-    # Set the size of the window
-    window = tk.Frame(root, width=800, height=600)
+    # Set the size of the window to full screen
+    root.attributes('-fullscreen', True)
+    window = tk.Frame(root)
     window.pack(fill=tk.BOTH, expand=1)
 
     slideShow = SlideShow(root, 'Videos')
