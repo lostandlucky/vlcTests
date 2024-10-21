@@ -4,6 +4,7 @@ import cv2
 import numpy as np
 from PIL import Image, ImageTk
 import time
+import os
 
 class SlideShow:
     def __init__(self, root, media_folder, run_duration=3000):
@@ -18,8 +19,10 @@ class SlideShow:
         #remove
         self.run_duration = run_duration
         
-        self.media_files = [f for f in os.listdir(media_folder) if f.endswith(('.png', '.jpg', '.jpeg', '.gif', '.mp4', '.mkv', '.mov'))]
-        
+        #Media
+        self.media_folder = media_folder
+        self.media_files = self.load_media_locations(self.media_folder)
+       
         #Start the show
         self.play_video('Videos/1CarMovie1.mov')
     
@@ -31,8 +34,8 @@ class SlideShow:
         self.player.set_xwindow(window.winfo_id())
         self.player.play()
 
-
-    def playNextMedia
+    def load_media_locations(self, media_folder):
+        self.media_files = [f for f in os.listdir(media_folder) if f.endswith(('.png', '.jpg', '.jpeg', '.gif', '.mp4', '.mkv', '.mov'))]
 
 
 
