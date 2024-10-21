@@ -29,6 +29,7 @@ class SlideShow:
         
         # Bind the right arrow key to go to the next video
         self.root.bind("<Right>", self.increment_media_index)
+        self.root.bind("<Left>", self.decrement_media_index)
         
         print(self.media_files)
         #Start the show
@@ -39,7 +40,7 @@ class SlideShow:
         self.current_media_index = (self.current_media_index + 1) % len(self.media_files)
         self.play_video()
         
-    def decrement_media_index(self):
+    def decrement_media_index(self, optional_event):
         #TODO: Possibly make it so that it can't go further back than the beginning
         self.current_media_index = (self.current_media_index - 1) % len(self.media_files)
         self.play_video()
