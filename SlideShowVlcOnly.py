@@ -22,7 +22,6 @@ class SlideShow:
         #Media
         self.media_folder = media_folder
         self.media_files = self.load_media_locations(self.media_folder)
-        self.label = None
 
         #Controls
         self.current_media_index = 0
@@ -33,53 +32,28 @@ class SlideShow:
         self.root.bind("<Left>", self.decrement_media_index)
         self.root.bind("<Escape>", self.quit)
         
-        print(self.media_files) #debugging
+        print(self.media_files)
         #Start the show
-        self.display_media()
+        self.play_video()
     
     def increment_media_index(self, optional_event):
-        print("Incrementing") #debugging
+        print("Incrementing")
         self.current_media_index = (self.current_media_index + 1) % len(self.media_files)
-        self.display_media()
+        self.play_video()
         
     def decrement_media_index(self, optional_event):
         #TODO: Possibly make it so that it can't go further back than the beginning
         self.current_media_index = (self.current_media_index - 1) % len(self.media_files)
-        self.display_media()
+        self.play_video()
     
-    def display_media(self):
-        media_path = self.media_files[self.current_media_index]
-        if media_path.endswith(('.png', '.jpg', '.jpeg', '.gif')):
-            self.show_image(media_path)
-        elif media_path.endswith(('.mp4', '.mkv', '.mov')):
-            self.play_video(media_path)
-    
-    def play_video(self, media_path):
-        if self.label:
-            print('destroying label') #debugging
-            self.label.destroy()
-            self.label = None
-        media = self.instance.media_new(media_path)
+    def play_video(self):
+        print(self.media_files)
+        video_path = self.media_files[self.current_media_index]
+        media = self.instance.media_new(video_path)
         self.player.set_media(media)
         
         self.player.set_xwindow(window.winfo_id())
         self.player.play()
-        
-    def show_image(self, media_path):
-        self.player.stop()
-        
-        print('showing image:', media_path) #debugging
-        image = Image.open(media_path)
-        image = image.resize((800, 600))
-        photo = ImageTk.PhotoImage(image)
-        
-        if not self.label:
-            print('creating label') #debugging
-            self.label = tk.Label(window, image=photo)
-        self.label.config(image=photo)
-        self.label.image = photo
-        self.label.place(x=0, y=0, relwidth=1, relheight=1)
-        # self.after(self.delay, self.cycle_media)
 
     def load_media_locations(self, media_folder):
         media_files = [os.path.join(media_folder, f) for f in os.listdir(media_folder) if f.endswith(('.mp4', '.mkv', '.mov', '.avi', '.png', '.jpg', '.jpeg', '.gif'))]
@@ -101,8 +75,6 @@ if __name__ == "__main__":
     # Set the size of the window to full screen
     root.attributes('-fullscreen', True)
     window = tk.Frame(root)
-    
-    #window = tk.Frame(root, width=800, height=600)
     window.pack(fill=tk.BOTH, expand=1)
 
     slideShow = SlideShow(root, 'Videos')

@@ -52,12 +52,13 @@ class MediaSlideshow():
             self.current_media_is_video = False
 
         # Clear the label image in case a video was playing before
-        self.label.config(image='')
+        # self.label.config(image='')
 
         # Display image using PIL and tkinter
         image = Image.open(image_path)
         image = image.resize((800, 600))  # Resize to fit the window
         photo = ImageTk.PhotoImage(image)
+        
         self.root.label.config(image=photo)
         self.root.label.image = photo  # Keep a reference to avoid garbage collection
 
