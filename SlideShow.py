@@ -7,31 +7,31 @@ import time
 import os
 
 class SlideShow:
-    def __init__(self, root, media_folder, run_duration=3000):
+    def __init__(self, viewer, media_folder):
         
         #tkinter
-        self.root = root
+        # self.root = root
+        
+        #Reference Viewer
+        self.viewer = viewer
         
         #VLC Setup
         self.instance = vlc.Instance()
         self.player = self.instance.media_player_new()
         
-        #remove
-        self.run_duration = run_duration
-        
         #Media
         self.media_folder = media_folder
         self.media_files = self.load_media_locations(self.media_folder)
-        self.label = None
+        # self.label = None
 
         #Controls
         self.current_media_index = 0
         self.current_media_is_video = False
         
         # Bind the right arrow key to go to the next video
-        self.root.bind("<Right>", self.increment_media_index)
-        self.root.bind("<Left>", self.decrement_media_index)
-        self.root.bind("<Escape>", self.quit)
+        self.viewer.root.bind("<Right>", self.increment_media_index)
+        self.viewer.root.bind("<Left>", self.decrement_media_index)
+        self.viewer.root.bind("<Escape>", self.quit)
         
         print(self.media_files) #debugging
         #Start the show
@@ -55,14 +55,17 @@ class SlideShow:
             self.play_video(media_path)
     
     def play_video(self, media_path):
-        if self.label:
-            print('destroying label') #debugging
-            self.label.destroy()
-            self.label = None
+        # if self.label:
+        #     print('destroying label') #debugging
+        #     self.label.destroy()
+        #     self.label = None
+        self.viewer.show_video()
+        
         media = self.instance.media_new(media_path)
         self.player.set_media(media)
         
-        self.player.set_xwindow(window.winfo_id())
+        # self.player.set_xwindow(window.winfo_id())
+        self.player.set_xwindow(self.viewer.get_window_id())
         self.player.play()
         
     def show_image(self, media_path):
@@ -73,12 +76,14 @@ class SlideShow:
         image = image.resize((800, 600))
         photo = ImageTk.PhotoImage(image)
         
-        if not self.label:
-            print('creating label') #debugging
-            self.label = tk.Label(window, image=photo)
-        self.label.config(image=photo)
-        self.label.image = photo
-        self.label.place(x=0, y=0, relwidth=1, relheight=1)
+        self.viewer.show_image(photo)
+        
+        # if not self.label:
+        #     print('creating label') #debugging
+        #     self.label = tk.Label(window, image=photo)
+        # self.label.config(image=photo)
+        # self.label.image = photo
+        # self.label.place(x=0, y=0, relwidth=1, relheight=1)
         # self.after(self.delay, self.cycle_media)
 
     def load_media_locations(self, media_folder):
@@ -89,7 +94,8 @@ class SlideShow:
     
     def quit(self, optional_event=None):
         self.player.stop()
-        self.root.quit()
+        self.viewer.quit()
+        # self.root.quit()
             
 
 
