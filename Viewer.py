@@ -8,6 +8,10 @@ class Viewer:
         self.window = self.create_window()
         self.imageContainer = None
         
+        # self.root.lift()
+        # self.root.attributes('-topmost', True)
+        # self.root.after_idle(self.root.attributes, '-topmost', False)
+
         # Bind the right arrow key to go to the next video
         # self.root.bind("<Right>", self.increment_media_index)
         # self.root.bind("<Left>", self.decrement_media_index)

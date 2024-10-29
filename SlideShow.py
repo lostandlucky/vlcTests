@@ -7,13 +7,19 @@ import time
 import os
 
 class SlideShow:
-    def __init__(self, viewer, media_folder):
+    def __init__(self, viewer, controller, media_folder):
         
         #tkinter
         # self.root = root
         
         #Reference Viewer
         self.viewer = viewer
+        
+        #Reference Controller
+        self.controller = controller
+        self.controller.incrementCallback = self.increment_media_index
+        self.controller.decrementCallback = self.decrement_media_index
+        self.controller.quitCallback = self.stop
         
         #VLC Setup
         self.instance = vlc.Instance()
@@ -29,20 +35,20 @@ class SlideShow:
         self.current_media_is_video = False
         
         # Bind the right arrow key to go to the next video
-        self.viewer.root.bind("<Right>", self.increment_media_index)
-        self.viewer.root.bind("<Left>", self.decrement_media_index)
-        self.viewer.root.bind("<Escape>", self.quit)
+        # self.viewer.root.bind("<Right>", self.increment_media_index)
+        # self.viewer.root.bind("<Left>", self.decrement_media_index)
+        # self.viewer.root.bind("<Escape>", self.quit)
         
         print(self.media_files) #debugging
         #Start the show
         self.display_media()
     
-    def increment_media_index(self, optional_event):
+    def increment_media_index(self):
         print("Incrementing") #debugging
         self.current_media_index = (self.current_media_index + 1) % len(self.media_files)
         self.display_media()
         
-    def decrement_media_index(self, optional_event):
+    def decrement_media_index(self):
         #TODO: Possibly make it so that it can't go further back than the beginning
         self.current_media_index = (self.current_media_index - 1) % len(self.media_files)
         self.display_media()
@@ -92,7 +98,7 @@ class SlideShow:
             raise FileNotFoundError(f"No media files found in the folder: {media_folder}")
         return media_files
     
-    def quit(self, optional_event=None):
+    def stop(self, optional_event=None):
         self.player.stop()
         self.viewer.quit()
         # self.root.quit()
