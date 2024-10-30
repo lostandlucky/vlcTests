@@ -10,8 +10,8 @@ ser = serial.Serial(
 
 while True:
     
-    time.sleep(5)
-    ser.reset_input_buffer()
+    # time.sleep(5)
+    # ser.reset_input_buffer()
     data = ser.read(4)  # Read 4 bytes
     print(f"Raw data: {data}")
     

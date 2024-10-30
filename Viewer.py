@@ -6,6 +6,8 @@ class Viewer:
         self.root = tk.Tk()
         ##self.root.title("VLC Video Player")
         self.window = self.create_window()
+        # self.canvas = tk.Canvas(self.window)
+        # self.canvas.pack(fill=tk.BOTH, expand=1)
         self.imageContainer = None
         
         # self.root.lift()

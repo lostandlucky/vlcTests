@@ -11,7 +11,7 @@ class EncoderController:
         port='/dev/ttyS0',
         baudrate=125000,
         )
-        self.tics_per_increment = 10
+        self.tics_per_increment = 5
         self.increment_count = 0
         self.t1 = threading.Thread(target=self.begin_loop)
     
