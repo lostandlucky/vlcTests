@@ -287,6 +287,16 @@ def main(media_folder='Videos', serial_port='/dev/ttyS0'):
         time.sleep(1)
 
 if __name__ == "__main__":
-    folder = sys.argv[1] if len(sys.argv) > 1 else 'Videos'
+    exhibit = sys.argv[1] if len(sys.argv) > 1 else 'Videos'
+    
+    if exhibit == 'Music':
+        folder = 'Videos/Music_Exhibit'
+    elif exhibit == 'Teens':
+        folder = 'Videos/Teens_Exhibit'
+    elif exhibit == 'Kids':
+        folder = 'Videos/Kids_Exhibit'
+    else:
+        folder = 'Videos'
+    
     port = sys.argv[2] if len(sys.argv) > 2 else '/dev/ttyS0'
     main(folder, port)

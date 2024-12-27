@@ -28212,3 +28212,4 @@ DEBUG:PIL.TiffImagePlugin:tag: XResolution (282) - type: rational (5) Tag Locati
 DEBUG:PIL.TiffImagePlugin:tag: YResolution (283) - type: rational (5) Tag Location: 58 - Data Location: 94 - value: b'\x00\x00\x01\x90\x00\x00\x00\x01'
 DEBUG:PIL.TiffImagePlugin:tag: ResolutionUnit (296) - type: short (3) - value: b'\x00\x02'
 DEBUG:PIL.TiffImagePlugin:tag: ExifIFD (34665) - type: long (4) - value: b'\x00\x00\x00f'
+DEBUG:root:Starting at 27/12/2024 14:08:46
