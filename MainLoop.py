@@ -1,13 +1,30 @@
-# from SlideShow import SlideShow
 from Viewer import Viewer
-# from KeyboardController import KeyboardController
 from EncoderController import EncoderController
 from SlideShow import SlideShow
+import psutil
+import time
+import threading
+import logging
+from datetime import datetime
+
+logging.basicConfig(filename='./app.log', level=logging.DEBUG)
+
+now = datetime.now()
+dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+logging.debug(f'Starting at {dt_string}')
+
+def monitor_resources():
+    while True:
+        cpu_usage = psutil.cpu_percent(interval=1)
+        memory_info = psutil.virtual_memory()
+        logging.debug(f'CPU Usage: {cpu_usage}%')
+        logging.debug(f'Memory Usage: {memory_info.percent}%')
+        time.sleep(5)
 
 viewer = Viewer()
+# resource_thread = threading.Thread(target=monitor_resources)
+# resource_thread.start()
 
-
-# controller = KeyboardController()
 controller = EncoderController()
 
 slideShow = SlideShow(viewer, controller, 'Videos')
@@ -24,16 +41,7 @@ def signal_handler(sig, frame):
     slideShow.stop()
     sys.exit(0)
 
-# while True:
-#     data = ser.read(4)  # Read 4 bytes
-#     print(f"Raw data: {data}")
-    
-#     if data == b'\xff\x00\x00\x01':
-#         print("Encoder spinning clockwise")
-#         self.switch_vid()
-#     elif data == b'\xff\x00\x00\xfe':
-#         print("Encoder spinning counterclockwise")
-#     else:
-#         print("Unknown state")
-# ser.close()
 
+
+# if __name__ == "__main__":
+    # play_video('/path/to/your/video.mp4')

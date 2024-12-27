@@ -8,7 +8,10 @@ echo "########"
 echo "########"
 
 #export DISPLAY=:0 
-cd /home/IntExp/Documents/vlcWork
+
+current_project
+
+# cd /home/IntExp/Documents/vlcWork
 
 # Xvfb :99 -screen 0 1024x768x16 &
 
@@ -21,6 +24,8 @@ cd /home/IntExp/Documents/vlcWork
 # matchbox-window-manager &
 
 # Run the Python script
-sudo -E /home/IntExp/Documents/vlcWork/.venv/bin/python /home/IntExp/Documents/vlcWork/MainLoop.py
+#sudo -E /home/IntExp/Documents/vlcWork/.venv/bin/python /home/IntExp/Documents/vlcWork/MainLoop.py
+
+python MainLoop.py
 
 exit 0
